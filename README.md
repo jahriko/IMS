@@ -58,7 +58,7 @@
 
 ### Why is this helpful ?
 
-* After you graduate and get a job at a software company, the first thing that you'll encounter is the version control system. Git is the most commonly used as a version control system. But there are other alternatives such as Mercurial, SVN and Helix core. 
+After you graduate and get a job at a software company, the first thing that you'll encounter is the version control system. Git is the most commonly used as a version control system. But there are other alternatives such as Mercurial, SVN and Helix core. 
 
 Now, GitHub is a platform that provides hosting for software development version control using Git. In other words, this is where you store your Git repositories.
 
