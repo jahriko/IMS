@@ -3,7 +3,7 @@ package com.mycompany.ims.java;
 
 // Type your name here:
 // 1. Jericho Opsima
-// 2. TestJericho
+
 
 public class IMSJava extends javax.swing.JFrame {
 
