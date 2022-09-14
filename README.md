@@ -11,7 +11,7 @@
 3. Open GitKraken
 4. Go to `File > Clone Repo`
 5. Click `Github.com`
-6. Click the dropdown menu from `Repository to Clone` and select `IMS`
+6. Click the dropdown menu from `Repository to Clone` and select `IMS`. It should be under your GitHub username.
 
 ![image](https://user-images.githubusercontent.com/82688509/190139208-e34116dd-0772-4440-9595-c64ae20267db.png)
 
