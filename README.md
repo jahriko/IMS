@@ -57,3 +57,4 @@
 6. Creating a pull request
 
 
+If you want to know more about Git & Github, check out this video : https://www.youtube.com/watch?v=SWYqp7iY_Tc
