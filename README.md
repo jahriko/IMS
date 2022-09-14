@@ -47,4 +47,13 @@
 23. In your title, type `Add name (insert name here)`
 24. Finally, click `Create pull request`
 
-### Congratulations, you made it!
+### Congratulations, you made it! Now you know how to :
+
+1. Fork a repository
+2. Clone a repository
+3. Make changes to the codebase
+4. Staging all changes
+5. Commiting the changes
+6. Creating a pull request
+
+
