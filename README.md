@@ -21,7 +21,7 @@
 
 8. Open Netbeans IDE.
 9. Go to `File > Open Project`
-10. Locate where you put the forked repository
+10. Locate where you put the clone repository
 11. `Open Project`
 
 ### You're almost done!
