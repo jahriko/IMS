@@ -3,8 +3,8 @@
 1. Create a new fork for this repository : https://github.com/jahriko/IMS
 
 ![image](https://user-images.githubusercontent.com/82688509/190138027-32fc3abd-209a-43ba-9fda-21a61dc27ede.png)
-
-![image](https://user-images.githubusercontent.com/82688509/190157633-501af7d1-9137-462f-b141-3d3099cb3387.png)
+---
+![image](https://user-images.githubusercontent.com/82688509/190167990-863888ec-f8cf-485d-8ed2-f7e600543fd0.png)
 
 Click `Create fork`
 
