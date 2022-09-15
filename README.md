@@ -1,4 +1,4 @@
-# How to make changes to the codebase
+# How to make changes to the codebase (Under maintenance, please do not proceed)
 
 1. Create a new fork for this repository : https://github.com/jahriko/IMS
 
@@ -17,14 +17,17 @@ Click `Create fork`
 
 7. Click `Clone the Repo!`
 
-Do not create submodules. Click 'No'
+If you can see "Create submodules....". Click 'No'.
 
 ### Congratulations! Now let's move on to the next step.
 
 8. Open Netbeans IDE.
 9. Go to `File > Open Project`
-10. Locate where you put the clone repository
-11. `Open Project`
+10. 
+![image](https://user-images.githubusercontent.com/82688509/190169040-a1aca245-da97-468a-9047-cb7db4f51da4.png)
+
+11. Locate where you put the clone repository
+12. `Open Project`
 
 ### You're almost done!
 
