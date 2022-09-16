@@ -58,7 +58,7 @@ GitKraken : https://www.gitkraken.com/download
  
 ![image](https://user-images.githubusercontent.com/82688509/190169040-a1aca245-da97-468a-9047-cb7db4f51da4.png)
 
-* Locate where you put the clone repository
+* Locate where you put the cloned repository
 * `Open Project`
 
 ---
