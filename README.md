@@ -59,10 +59,26 @@ GitKraken : https://www.gitkraken.com/download
 
 * Then click `Commit changes to 1 file` button.
 * Click `push`
-* Go back to GitHub then to the forked repository. 
-* Click `Compare & pull request`
-* In your title, type `Add name (insert name here)`
-* Finally, click `Create pull request`
+ 
+![image](https://user-images.githubusercontent.com/82688509/190545660-eaf24164-e84d-4fcc-9a6a-dc1b12e913ea.png)
+
+* Go back to GitHub and click `Pull Requests`
+
+![image](https://user-images.githubusercontent.com/82688509/190545786-b229527e-46ac-4d02-ac5e-f484e00beb63.png)
+
+
+* Click `Create pull request`
+
+![image](https://user-images.githubusercontent.com/82688509/190545812-e6214790-8447-4f04-b447-f3303ebbc287.png)
+
+* Click `Compare across forks`
+
+![image](https://user-images.githubusercontent.com/82688509/190546168-7dcd9fa9-d67e-432c-99f2-c7b2165fe4af.png)
+
+* On the right hand side should be your GitHub username.
+* Click `Create Pull Request`
+* On the title, type `Add Name (your name here)`
+* Click `Create Pull Request`
 
 ### Congratulations, you made it! Now you know how to :
 
