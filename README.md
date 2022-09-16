@@ -1,21 +1,35 @@
 # How to make changes to the codebase (Under maintenance, please do not proceed)
 
-1. Create a new fork for this repository : https://github.com/jahriko/IMS
+Before you proceed, you must first install Git and GitKraken
+
+Git : https://git-scm.com/download/win
+  
+    Installation video : https://youtu.be/cJTXh7g-uCM?t=86
+  
+GitKraken : https://www.gitkraken.com/download
+      
+    Create a GitKraken account after you finished installing.
+
+---
+
+* Fork this repository
 
 ![image](https://user-images.githubusercontent.com/82688509/190138027-32fc3abd-209a-43ba-9fda-21a61dc27ede.png)
+
+* Click `+ Create a new fork`
 ---
 ![image](https://user-images.githubusercontent.com/82688509/190167990-863888ec-f8cf-485d-8ed2-f7e600543fd0.png)
 
-Click `Create fork`
-
-3. Open GitKraken
-4. Go to `File > Clone Repo`
-5. Click `Github.com`
-6. Click the dropdown menu from `Repository to Clone` and select `IMS`. It should be under your GitHub username.
+* Click `Create fork` button
+---
+* Open GitKraken
+* Go to `File > Clone Repo`
+* Click `Github.com`
+* Click the dropdown menu from `Repository to Clone` and select `IMS`. **NOTE: It should be under your GitHub username.**
 
 ![image](https://user-images.githubusercontent.com/82688509/190160163-3d2e84f6-37c4-4306-b372-a2b580c9e4e1.png)
 
-7. Click `Clone the Repo!`
+7. Click `Clone the Repo!` button
 
 If you can see "Create submodules....". Click 'No'.
 
