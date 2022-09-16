@@ -1,6 +1,10 @@
 # How to make changes to the codebase (Under maintenance, please do not proceed)
 
-Before you proceed, you must first install Git and GitKraken
+---
+
+<p align="center"><strong>Before you proceed, you must first install Git and GitKraken</strong></p>
+
+---
 
 Git : https://git-scm.com/download/win
   
@@ -12,16 +16,26 @@ GitKraken : https://www.gitkraken.com/download
 
 ---
 
+<p align="center"><strong>Forking the repository</strong></p>
+
+---
+
 * Fork this repository
 
 ![image](https://user-images.githubusercontent.com/82688509/190138027-32fc3abd-209a-43ba-9fda-21a61dc27ede.png)
 
 * Click `+ Create a new fork`
----
+
 ![image](https://user-images.githubusercontent.com/82688509/190167990-863888ec-f8cf-485d-8ed2-f7e600543fd0.png)
 
 * Click `Create fork` button
+
 ---
+
+<p align="center"><strong>Cloning the repository</strong></p>
+
+---
+
 * Open GitKraken
 * Go to `File > Clone Repo`
 * Click `Github.com`
@@ -35,6 +49,10 @@ GitKraken : https://www.gitkraken.com/download
 
 ---
 
+<p align="center"><strong>Opening the Netbeans project</strong></p>
+
+---
+
 * Open Netbeans IDE.
 * Go to `File > Open Project`
  
@@ -42,13 +60,27 @@ GitKraken : https://www.gitkraken.com/download
 
 * Locate where you put the clone repository
 * `Open Project`
+
+---
+
+<p align="center"><strong>Making code changes</strong></p>
+
+---
+
 * Go to `Source Packages > com.mycompany.ims.java > IMSJava.java`
 * Comment your name below the number.
 
 ![image](https://user-images.githubusercontent.com/82688509/190145195-73c9d8f3-32a8-4240-b020-436d1dc8a96f.png)
 
 * Save the file.
-* Open GitKraken again.
+
+---
+
+<p align="center"><strong>Staging and committing changes</strong></p>
+
+---
+
+* Open GitKraken.
 * Stage all changes.
 
 ![image](https://user-images.githubusercontent.com/82688509/190144114-9fe27c02-5bb0-4d82-b99e-6d5179216c0b.png)
@@ -62,10 +94,14 @@ GitKraken : https://www.gitkraken.com/download
  
 ![image](https://user-images.githubusercontent.com/82688509/190545660-eaf24164-e84d-4fcc-9a6a-dc1b12e913ea.png)
 
+---
+
+<p align="center"><strong>Creating a pull request</strong></p>
+
+---
 * Go back to GitHub and click `Pull Requests`
 
 ![image](https://user-images.githubusercontent.com/82688509/190545786-b229527e-46ac-4d02-ac5e-f484e00beb63.png)
-
 
 * Click `Create pull request`
 
@@ -80,7 +116,13 @@ GitKraken : https://www.gitkraken.com/download
 * On the title, type `Add Name (your name here)`
 * Click `Create Pull Request`
 
-### Congratulations, you made it! Now you know how to :
+---
+
+<p align="center"><strong>🎉 Congratulations you made it! 🎉</strong></p>
+
+---
+
+Now you know how to :
 
 1. Fork a repository
 2. Clone a repository
