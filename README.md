@@ -29,43 +29,40 @@ GitKraken : https://www.gitkraken.com/download
 
 ![image](https://user-images.githubusercontent.com/82688509/190160163-3d2e84f6-37c4-4306-b372-a2b580c9e4e1.png)
 
-7. Click `Clone the Repo!` button
+* Click `Clone the Repo!` button
 
-If you can see "Create submodules....". Click 'No'.
+> If you can see "Create submodules....". Click 'No'.
 
-### Congratulations! Now let's move on to the next step.
+---
 
-8. Open Netbeans IDE.
-9. Go to `File > Open Project`
-10. 
+* Open Netbeans IDE.
+* Go to `File > Open Project`
+ 
 ![image](https://user-images.githubusercontent.com/82688509/190169040-a1aca245-da97-468a-9047-cb7db4f51da4.png)
 
-11. Locate where you put the clone repository
-12. `Open Project`
-
-### You're almost done!
-
-12. Go to `Source Packages > com.mycompany.ims.java > IMSJava.java`
-13. Comment your name below the number.
+* Locate where you put the clone repository
+* `Open Project`
+* Go to `Source Packages > com.mycompany.ims.java > IMSJava.java`
+* Comment your name below the number.
 
 ![image](https://user-images.githubusercontent.com/82688509/190145195-73c9d8f3-32a8-4240-b020-436d1dc8a96f.png)
 
-15. Save the file.
-16. Open GitKraken again.
-17. Stage all changes.
+* Save the file.
+* Open GitKraken again.
+* Stage all changes.
 
 ![image](https://user-images.githubusercontent.com/82688509/190144114-9fe27c02-5bb0-4d82-b99e-6d5179216c0b.png)
 
-18. Down below, type `Add (insert name here)`.
+* Down below, type `Add (insert name here)`.
 
 ![image](https://user-images.githubusercontent.com/82688509/190144445-1a54b3a2-c223-4b8f-b33a-78d853bd31b7.png)
 
-20. Then click `Commit changes to 1 file` button.
+* Then click `Commit changes to 1 file` button.
 * Click `push`
-22. Go back to GitHub then to the forked repository. 
-23. Click `Compare & pull request`
-24. In your title, type `Add name (insert name here)`
-25. Finally, click `Create pull request`
+* Go back to GitHub then to the forked repository. 
+* Click `Compare & pull request`
+* In your title, type `Add name (insert name here)`
+* Finally, click `Create pull request`
 
 ### Congratulations, you made it! Now you know how to :
 
