@@ -61,10 +61,11 @@ If you can see "Create submodules....". Click 'No'.
 ![image](https://user-images.githubusercontent.com/82688509/190144445-1a54b3a2-c223-4b8f-b33a-78d853bd31b7.png)
 
 20. Then click `Commit changes to 1 file` button.
-21. Go back to GitHub then to the forked repository. 
-22. Click `Compare & pull request`
-23. In your title, type `Add name (insert name here)`
-24. Finally, click `Create pull request`
+* Click `push`
+22. Go back to GitHub then to the forked repository. 
+23. Click `Compare & pull request`
+24. In your title, type `Add name (insert name here)`
+25. Finally, click `Create pull request`
 
 ### Congratulations, you made it! Now you know how to :
 
