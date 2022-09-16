@@ -1,4 +1,4 @@
-# How to make changes to the codebase (Under maintenance, please do not proceed)
+# How to make changes to the codebase
 
 ---
 
