@@ -6,6 +6,7 @@ package com.mycompany.ims.java;
 //2. Mauie Avenido
 //3. Joshua Valerio
 //4. Shane Victor Bato-on
+//5. Jessie James Calvo
 
 public class IMSJava extends javax.swing.JFrame {
 
