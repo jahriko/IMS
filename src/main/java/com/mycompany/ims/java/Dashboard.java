@@ -4,7 +4,18 @@
  */
 package com.mycompany.ims.java;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import static ims.gen.Tables.CUSTOMER;
+import java.awt.CardLayout;
+import javax.swing.UIManager;
+import static ims.gen.Tables.PRODUCT;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.jooq.Record1;
+import org.jooq.Result;
+import org.jooq.Record;
+import org.jooq.exception.DataAccessException;
+import static org.jooq.impl.DSL.selectFrom;
 
 /**
  *
@@ -13,11 +24,51 @@ import com.formdev.flatlaf.FlatLightLaf;
 public class Dashboard extends javax.swing.JFrame {
 
     /**
-     * Creates new form Customer
+     * Creates new form Dashboardd
      */
+    
+    CardLayout cl;
+    DefaultTableModel itemTableModel;
+    DefaultTableModel customerTableModel;
+    DefaultTableModel productTableModel;
     public Dashboard() {
         initComponents();
+        // Center Window
         setLocationRelativeTo(null);
+        
+        cl = (CardLayout) (cardPanels.getLayout());
+        jSplitPane1.setEnabled(false);
+        jLabel7.setText("Dashboard");
+        
+        // Make row non-editable
+        customerTable.setDefaultEditor(Object.class, null);
+        productTable.setDefaultEditor(Object.class, null);
+        itemTable.setDefaultEditor(Object.class, null);
+        
+        itemTableModel = (DefaultTableModel) itemTable.getModel();
+        
+        customerTableModel = (DefaultTableModel) customerTable.getModel();
+        populateCustomerDropdown();
+        
+        productTableModel = (DefaultTableModel) productTable.getModel();
+        populateProductDropdown();
+        
+       
+    }
+    
+    
+    private void populateCustomerDropdown() {
+        Result<Record1<String>> res = DB.context().select(CUSTOMER.NAME).from(CUSTOMER).fetch();
+          
+        for (var r : res) {
+            customerDropdown.addItem(r.get(CUSTOMER.NAME));
+        }
+
+    }
+    
+    private void populateItemTable() {
+        itemTableModel.setRowCount(0);
+        
     }
 
     /**
@@ -27,20 +78,353 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jButton3 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        cardPanels = new javax.swing.JPanel();
+        OrdersPanel = new javax.swing.JPanel();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
+        addItemBtn = new javax.swing.JButton();
+        amountTendered = new javax.swing.JSpinner();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        customerDropdown = new javax.swing.JComboBox<>();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        totalText = new javax.swing.JLabel();
+        productDropdown = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        trackingNumberField = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        itemTable = new javax.swing.JTable();
+        changeText = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        addOrderBtn = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        deleteItemBtn = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        ProductsPanel = new javax.swing.JPanel();
+        addProductBtn = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        productTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        productField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        quantitySpinner = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        priceSpinner = new javax.swing.JSpinner();
+        CustomersPanel = new javax.swing.JPanel();
+        addCustomerBtn = new javax.swing.JButton();
+        updateCustomerBtn = new javax.swing.JButton();
+        deleteCustomerBtn = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        customerTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        customerNameField = new javax.swing.JTextField();
+        addressField = new javax.swing.JTextField();
+        phoneNumberField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jButton1.setBackground(new java.awt.Color(204, 255, 204));
+        jButton1.setText("Products");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(255, 204, 204));
+        jButton2.setText("Customers");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(204, 255, 255));
+        jButton3.setText("Orders");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setBackground(new java.awt.Color(255, 102, 102));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setText("jLabel7");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 587, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(64, 64, 64))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addContainerGap())
+            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setLeftComponent(jPanel1);
+
+        cardPanels.setLayout(new java.awt.CardLayout());
+
+        addItemBtn.setText("Add Item");
+        addItemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addItemBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Tracking No.");
+
+        jLabel12.setText("Amount Tendered");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setText("Change");
+
+        jLabel13.setText("Quantity");
+
+        totalText.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        totalText.setText("jLabel10");
+
+        jLabel14.setText("Product");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setText("Total");
+
+        itemTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Product", "Total Price", "Quantity"
+            }
+        ));
+        jScrollPane4.setViewportView(itemTable);
+
+        changeText.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        changeText.setText("jLabel11");
+
+        jLabel10.setText("Customer Name");
+
+        addOrderBtn.setText("Add Order");
+        addOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addOrderBtnActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Update");
+
+        jButton6.setText("Delete");
+
+        deleteItemBtn.setText("Delete Item");
+        deleteItemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteItemBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                    .addComponent(customerDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(productDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(amountTendered, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(trackingNumberField)
+                            .addComponent(jLabel16))
+                        .addGap(49, 49, 49))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(addItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(deleteItemBtn))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(totalText)
+                                .addGap(61, 61, 61)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(changeText))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(addOrderBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton6)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addGap(10, 10, 10)
+                .addComponent(customerDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(deleteItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(trackingNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(amountTendered, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(totalText)
+                    .addComponent(jLabel9)
+                    .addComponent(changeText))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
+        );
+
+        jSplitPane2.setLeftComponent(jPanel2);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Customer", "Order Number", "Date Ordered"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
+        );
+
+        jSplitPane2.setRightComponent(jPanel3);
+
+        javax.swing.GroupLayout OrdersPanelLayout = new javax.swing.GroupLayout(OrdersPanel);
+        OrdersPanel.setLayout(OrdersPanelLayout);
+        OrdersPanelLayout.setHorizontalGroup(
+            OrdersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OrdersPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane2))
+        );
+        OrdersPanelLayout.setVerticalGroup(
+            OrdersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OrdersPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane2))
+        );
+
+        cardPanels.add(OrdersPanel, "OrdersPanel");
+
+        addProductBtn.setText("Add Product");
+        addProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductBtnActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Edit");
+
+        jButton9.setText("Delete");
+
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -48,91 +432,376 @@ public class Dashboard extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Customer", "Phone Number", "Tracking Number", "Status"
+                "ID", "Product", "Quantity", "Price"
             }
         ));
-        jScrollPane4.setViewportView(jTable2);
+        productTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        productTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(productTable);
 
-        jButton1.setText("Add Order");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Product Name");
+
+        jLabel2.setText("Quantity");
+
+        jLabel3.setText("Price");
+
+        javax.swing.GroupLayout ProductsPanelLayout = new javax.swing.GroupLayout(ProductsPanel);
+        ProductsPanel.setLayout(ProductsPanelLayout);
+        ProductsPanelLayout.setHorizontalGroup(
+            ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(ProductsPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ProductsPanelLayout.createSequentialGroup()
+                        .addComponent(addProductBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton9))
+                    .addGroup(ProductsPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(priceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(432, Short.MAX_VALUE))
+        );
+        ProductsPanelLayout.setVerticalGroup(
+            ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ProductsPanelLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addProductBtn)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
+        );
+
+        cardPanels.add(ProductsPanel, "ProductsPanel");
+
+        addCustomerBtn.setText("Add Customer");
+        addCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addCustomerBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Edit Order");
-
-        jButton4.setText("Delete Order");
-
-        jMenu2.setText("Products");
-
-        jMenuItem2.setText("Add Product");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        updateCustomerBtn.setText("Update");
+        updateCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                updateCustomerBtnActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu2);
-
-        jMenu1.setText("Customers");
-
-        jMenuItem1.setText("Add Customer");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        deleteCustomerBtn.setText("Delete");
+        deleteCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                deleteCustomerBtnActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu1);
+        customerTable.setAutoCreateRowSorter(true);
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Address", "Phone Number"
+            }
+        ));
+        customerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        customerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerTableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(customerTable);
 
-        setJMenuBar(jMenuBar1);
+        jLabel4.setText("Customer Name");
+
+        jLabel5.setText("Address");
+
+        jLabel6.setText("Phone Number");
+
+        addressField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout CustomersPanelLayout = new javax.swing.GroupLayout(CustomersPanel);
+        CustomersPanel.setLayout(CustomersPanelLayout);
+        CustomersPanelLayout.setHorizontalGroup(
+            CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(CustomersPanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CustomersPanelLayout.createSequentialGroup()
+                        .addComponent(addCustomerBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateCustomerBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteCustomerBtn))
+                    .addGroup(CustomersPanelLayout.createSequentialGroup()
+                        .addGroup(CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CustomersPanelLayout.createSequentialGroup()
+                                .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(149, Short.MAX_VALUE))
+        );
+        CustomersPanelLayout.setVerticalGroup(
+            CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CustomersPanelLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6)
+                    .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(CustomersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE))
+        );
+
+        cardPanels.add(CustomersPanel, "CustomersPanel");
+
+        jSplitPane1.setRightComponent(cardPanels);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(716, Short.MAX_VALUE))
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSplitPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+            .addComponent(jSplitPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Customer cust = new Customer(this, true);
-        cust.setVisible(true);
-        cust.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        cl.show(cardPanels, "OrdersPanel");
+        jLabel7.setText("Orders");
+        populateCustomerDropdown();
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       new Product(this, true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new AddOrderDialog(this, true).setVisible(true);
+        cl.show(cardPanels, "ProductsPanel");
+        jLabel7.setText("Products");
+        populateProductTable();
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        cl.show(cardPanels, "CustomersPanel");
+        jLabel7.setText("Customers");
+        populateCustomerTable();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void addressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressFieldActionPerformed
+
+    private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
+        String product = (String) productDropdown.getSelectedItem();
+        int quantity = (Integer) quantitySpinner.getValue();
+        
+        Record1<String> getProduct = DB.context().select(PRODUCT.PRODUCT_NAME).from(PRODUCT).where(PRODUCT.PRODUCT_NAME.eq(product)).fetchSingle();
+        
+        int multiplyPrice = getProduct.get(PRODUCT.PRICE) * quantity;
+
+        var rowData = new Object[3];
+        rowData[0] = product;
+        rowData[0] = multiplyPrice;
+        rowData[0] = quantity;
+
+        itemTableModel.addRow(rowData);
+    }//GEN-LAST:event_addItemBtnActionPerformed
+
+    private void addOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addOrderBtnActionPerformed
+
+    private void addCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerBtnActionPerformed
+        String customerName = customerNameField.getText();
+        String address = addressField.getText();
+        String phoneNumber = phoneNumberField.getText();
+        
+        if (customerName.isBlank()
+                || address.isBlank()
+                || phoneNumber.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Missing fields.");
+            return;
+        }
+        
+        var isCustomerExist = DB.context()
+            .fetchExists(selectFrom(CUSTOMER)
+                .where(CUSTOMER.NAME.eq(customerName)));
+        
+        if(!isCustomerExist) {
+            DB.context().insertInto(
+                    CUSTOMER, 
+                    CUSTOMER.NAME, 
+                    CUSTOMER.ADDRESS, 
+                    CUSTOMER.PHONE_NUMBER).values(
+                            customerName, 
+                            address, 
+                            phoneNumber
+                    ).execute();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Customer already exists. Did you mean to update instead?",
+                    "Warning",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+
+        populateCustomerTable();
+    }//GEN-LAST:event_addCustomerBtnActionPerformed
+
+    private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
+        String product = productField.getText().trim();
+        int quantity = (Integer) quantitySpinner.getValue();
+        int price = (Integer) priceSpinner.getValue();
+        
+        if (product.isBlank()
+            || quantity < 0
+            || price < 0) {
+            JOptionPane.showMessageDialog(this, "Missing fields.");
+            return;
+        }
+        
+        var isProductExist = DB.context()
+            .fetchExists(selectFrom(PRODUCT)
+                .where(PRODUCT.PRODUCT_NAME.eq(product)));
+        
+        if(!isProductExist) {
+            DB.context().insertInto(
+                    PRODUCT, 
+                    PRODUCT.PRODUCT_NAME, 
+                    PRODUCT.QUANTITY, 
+                    PRODUCT.PRICE).values(
+                            product, 
+                            quantity, 
+                            price
+                    ).execute();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Price already exists. Did you mean to update instead?",
+                    "Warning",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+
+        populateProductTable();
+        
+        
+    }//GEN-LAST:event_addProductBtnActionPerformed
+
+    private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteItemBtnActionPerformed
+
+    private void updateCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCustomerBtnActionPerformed
+        String customerName = customerNameField.getText().trim();
+        String address = addressField.getText();
+        String phoneNumber = phoneNumberField.getText();
+        
+        int getCustomerId = (Integer) customerTable.getValueAt(customerTable.getSelectedRow(), 0);
+                
+        if (customerName.isBlank()
+                || address.isBlank()
+                || phoneNumber.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Missing fields.");
+            return;
+        }
+        
+        DB.context()
+                .update(CUSTOMER)
+                .set(CUSTOMER.NAME, customerName)
+                .set(CUSTOMER.ADDRESS, address)
+                .set(CUSTOMER.PHONE_NUMBER, phoneNumber)
+                .where(CUSTOMER.ID.eq(getCustomerId))
+                .execute();
+        
+        populateCustomerTable();
+
+        customerNameField.setText("");
+        addressField.setText("");
+        phoneNumberField.setText("");
+    }//GEN-LAST:event_updateCustomerBtnActionPerformed
+
+    private void deleteCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerBtnActionPerformed
+        if (customerTable.getSelectedRow() > -1) {
+            int getCustomerId = (Integer) customerTable.getValueAt(customerTable.getSelectedRow(), 0);
+            
+            try {
+                DB.context().delete(CUSTOMER).where(CUSTOMER.ID.eq(getCustomerId)).execute();
+            } catch (DataAccessException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Unable to delete customer.",
+                        "Inane warning",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            customerNameField.setText("");
+            addressField.setText("");
+            phoneNumberField.setText("");
+            populateCustomerTable();
+        }
+    }//GEN-LAST:event_deleteCustomerBtnActionPerformed
+
+    private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
+        int getSelectedRowIndex = customerTable.getSelectedRow();
+        
+        customerNameField.setText(customerTableModel.getValueAt(getSelectedRowIndex, 1).toString());
+        addressField.setText(customerTableModel.getValueAt(getSelectedRowIndex, 2).toString());
+        phoneNumberField.setText(customerTableModel.getValueAt(getSelectedRowIndex, 3).toString());
+        
+        
+    }//GEN-LAST:event_customerTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -143,27 +812,9 @@ public class Dashboard extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+         FlatIntelliJLaf.setup();
+         UIManager.put("Button.arc", 14);
         //</editor-fold>
-        //</editor-fold>
-        
-        FlatLightLaf.setup();
-        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -174,15 +825,107 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel CustomersPanel;
+    private javax.swing.JPanel OrdersPanel;
+    private javax.swing.JPanel ProductsPanel;
+    private javax.swing.JButton addCustomerBtn;
+    private javax.swing.JButton addItemBtn;
+    private javax.swing.JButton addOrderBtn;
+    private javax.swing.JButton addProductBtn;
+    private javax.swing.JTextField addressField;
+    private javax.swing.JSpinner amountTendered;
+    private javax.swing.JPanel cardPanels;
+    private javax.swing.JLabel changeText;
+    private javax.swing.JComboBox<String> customerDropdown;
+    private javax.swing.JTextField customerNameField;
+    private javax.swing.JTable customerTable;
+    private javax.swing.JButton deleteCustomerBtn;
+    private javax.swing.JButton deleteItemBtn;
+    private javax.swing.JTable itemTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField phoneNumberField;
+    private javax.swing.JSpinner priceSpinner;
+    private javax.swing.JComboBox<String> productDropdown;
+    private javax.swing.JTextField productField;
+    private javax.swing.JTable productTable;
+    private javax.swing.JSpinner quantitySpinner;
+    private javax.swing.JLabel totalText;
+    private javax.swing.JTextField trackingNumberField;
+    private javax.swing.JButton updateCustomerBtn;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void populateCustomerTable() {
+        customerTableModel.setRowCount(0);
+        
+        var res = DB.context().select(CUSTOMER.ID, CUSTOMER.NAME, CUSTOMER.ADDRESS, CUSTOMER.PHONE_NUMBER).from(CUSTOMER).fetch();
+        
+        var rowData = new Object[4];
+        
+        for (Record r : res) {
+            rowData[0] = r.get(CUSTOMER.ID);
+            rowData[1] = r.get(CUSTOMER.NAME);
+            rowData[2] = r.get(CUSTOMER.ADDRESS);
+            rowData[3] = r.get(CUSTOMER.PHONE_NUMBER);
+            customerTableModel.addRow(rowData);
+        }
+        
+        
+    }
+
+    private void populateProductTable() {
+        productTableModel.setRowCount(0);
+
+        var res = DB.context().select(PRODUCT.PRODUCT_ID, PRODUCT.PRODUCT_NAME, PRODUCT.QUANTITY, PRODUCT.PRICE).from(PRODUCT).fetch();
+
+        var rowData = new Object[4];
+
+        for (Record r : res) {
+            rowData[0] = r.get(PRODUCT.PRODUCT_ID);
+            rowData[1] = r.get(PRODUCT.PRODUCT_NAME);
+            rowData[2] = r.get(PRODUCT.QUANTITY);
+            rowData[3] = r.get(PRODUCT.PRICE);
+            customerTableModel.addRow(rowData);
+        }
+    }
+
+    private void populateProductDropdown() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
 }
