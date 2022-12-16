@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.ims.java;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
@@ -9,24 +5,20 @@ import static ims.gen.Tables.CUSTOMER;
 import java.awt.CardLayout;
 import javax.swing.UIManager;
 import static ims.gen.Tables.PRODUCT;
+import static ims.gen.Tables.TRANSACTION;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.Record;
+import org.jooq.Record2;
 import org.jooq.exception.DataAccessException;
 import static org.jooq.impl.DSL.selectFrom;
 
-/**
- *
- * @author Jericho Opsima
- */
 public class Dashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Dashboardd
-     */
-    
     CardLayout cl;
     DefaultTableModel itemTableModel;
     DefaultTableModel customerTableModel;
@@ -51,14 +43,11 @@ public class Dashboard extends javax.swing.JFrame {
         populateCustomerDropdown();
         
         productTableModel = (DefaultTableModel) productTable.getModel();
-        populateProductDropdown();
-        
-       
+        populateProductDropdown(); 
     }
-    
-    
+      
     private void populateCustomerDropdown() {
-        Result<Record1<String>> res = DB.context().select(CUSTOMER.NAME).from(CUSTOMER).fetch();
+        Result<Record1<String>> res = DB.context().selectDistinct(CUSTOMER.NAME).from(CUSTOMER).fetch();
           
         for (var r : res) {
             customerDropdown.addItem(r.get(CUSTOMER.NAME));
@@ -66,9 +55,17 @@ public class Dashboard extends javax.swing.JFrame {
 
     }
     
+    private void populateProductDropdown() {
+        Result<Record1<String>> res = DB.context().selectDistinct(PRODUCT.PRODUCT_NAME).from(PRODUCT).fetch();
+
+        for (var r : res) {
+            productDropdown.addItem(r.get(PRODUCT.PRODUCT_NAME));
+        }
+    }
+
+    
     private void populateItemTable() {
-        itemTableModel.setRowCount(0);
-        
+        itemTableModel.setRowCount(0);  
     }
 
     /**
@@ -93,7 +90,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         customerDropdown = new javax.swing.JComboBox<>();
-        jSpinner1 = new javax.swing.JSpinner();
+        addItemQuantitySpinner = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         totalText = new javax.swing.JLabel();
@@ -109,6 +106,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         deleteItemBtn = new javax.swing.JButton();
+        lol = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -124,6 +122,7 @@ public class Dashboard extends javax.swing.JFrame {
         quantitySpinner = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         priceSpinner = new javax.swing.JSpinner();
+        priceField = new javax.swing.JTextField();
         CustomersPanel = new javax.swing.JPanel();
         addCustomerBtn = new javax.swing.JButton();
         updateCustomerBtn = new javax.swing.JButton();
@@ -215,6 +214,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel12.setText("Amount Tendered");
 
+        addItemQuantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Change");
 
@@ -230,10 +231,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         itemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Product", "Total Price", "Quantity"
@@ -264,6 +262,8 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        lol.setText("egffer");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -282,7 +282,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(addItemQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(amountTendered, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,6 +315,10 @@ public class Dashboard extends javax.swing.JFrame {
                                 .addComponent(jButton6)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lol)
+                .addGap(99, 99, 99))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +333,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addItemQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -361,7 +365,9 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(addOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(lol)
+                .addGap(25, 25, 25))
         );
 
         jSplitPane2.setLeftComponent(jPanel2);
@@ -391,7 +397,7 @@ public class Dashboard extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel3);
@@ -420,7 +426,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Edit");
+        jButton8.setText("Update");
 
         jButton9.setText("Delete");
 
@@ -472,6 +478,10 @@ public class Dashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(priceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(432, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ProductsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(372, 372, 372))
         );
         ProductsPanelLayout.setVerticalGroup(
             ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,12 +495,14 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(priceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addProductBtn)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9))
+                .addGroup(ProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE))
         );
 
         cardPanels.add(ProductsPanel, "ProductsPanel");
@@ -597,7 +609,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(updateCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteCustomerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
         );
 
         cardPanels.add(CustomersPanel, "CustomersPanel");
@@ -621,7 +633,6 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         cl.show(cardPanels, "OrdersPanel");
         jLabel7.setText("Orders");
-        populateCustomerDropdown();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -644,23 +655,63 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_addressFieldActionPerformed
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
-        String product = (String) productDropdown.getSelectedItem();
-        int quantity = (Integer) quantitySpinner.getValue();
+        String product = (String) productDropdown.getSelectedItem().toString();
+        int quantity = (Integer) addItemQuantitySpinner.getValue();
+
+        Record1<Integer> getProductDetails = DB.context()
+                .select(PRODUCT.PRICE)
+                .from(PRODUCT)
+                .where(PRODUCT.PRODUCT_NAME.eq(product))
+                .fetchOne();
         
-        Record1<String> getProduct = DB.context().select(PRODUCT.PRODUCT_NAME).from(PRODUCT).where(PRODUCT.PRODUCT_NAME.eq(product)).fetchSingle();
+        int totalPrice = getProductDetails.get(PRODUCT.PRICE);
         
-        int multiplyPrice = getProduct.get(PRODUCT.PRICE) * quantity;
+        lol.setText(String.valueOf(totalPrice));
 
         var rowData = new Object[3];
         rowData[0] = product;
-        rowData[0] = multiplyPrice;
-        rowData[0] = quantity;
+        rowData[1] = totalPrice;
+        rowData[2] = quantity;
 
         itemTableModel.addRow(rowData);
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderBtnActionPerformed
-        // TODO add your handling code here:
+        String getCustomerFromDropdown = customerDropdown.getSelectedItem().toString();
+        String getTrackingNumberFromField = trackingNumberField.getText();
+        int getAmountTenderedFromSpinner = (int) amountTendered.getValue();
+        Record1<Integer> getProductIdFromProductName = 
+                DB.context()
+                        .select(PRODUCT.PRODUCT_ID)
+                        .from(PRODUCT)
+                        .where(PRODUCT.PRODUCT_NAME.eq(productDropdown.getSelectedItem().toString()))
+                        .fetchOne();
+        Record1<Integer> getCustomerIdFromCustomerName =
+                DB.context()
+                        .select(CUSTOMER.ID)
+                        .from(CUSTOMER)
+                        .where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString()))
+                        .fetchOne();
+        
+        
+        DefaultTableModel itemTableModel = (DefaultTableModel) itemTable.getModel();
+        int rowCount = itemTableModel.getRowCount();
+        
+        for (int row = 0; row < rowCount; row++) {
+            List<Object> rowData = new ArrayList<>();
+            for (int column = 0; column < itemTableModel.getColumnCount(); column++) {
+                rowData.add(DB.context()
+                        .select(PRODUCT.PRODUCT_ID)
+                        .from(PRODUCT)
+                        .where(PRODUCT.PRODUCT_NAME.eq(itemTableModel.getValueAt(row, column)))
+                        .fetchOne());
+                rowData.add(itemTableModel.getValueAt(row, column));
+            }
+            DB.context().insertInto(TRANSACTION).values(rowData).execute();
+        }
+        
+        
+        
     }//GEN-LAST:event_addOrderBtnActionPerformed
 
     private void addCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerBtnActionPerformed
@@ -704,35 +755,29 @@ public class Dashboard extends javax.swing.JFrame {
         String product = productField.getText().trim();
         int quantity = (Integer) quantitySpinner.getValue();
         int price = (Integer) priceSpinner.getValue();
-        
-        if (product.isBlank()
-            || quantity < 0
-            || price < 0) {
+        float pricee = Float.parseFloat(priceField.getText());
+
+        // Check for missing fields
+        if (product.isBlank() || quantity < 0 || pricee < 0) {
             JOptionPane.showMessageDialog(this, "Missing fields.");
             return;
         }
-        
+
+        // Check if product already exists in the database
         var isProductExist = DB.context()
-            .fetchExists(selectFrom(PRODUCT)
-                .where(PRODUCT.PRODUCT_NAME.eq(product)));
-        
-        if(!isProductExist) {
-            DB.context().insertInto(
-                    PRODUCT, 
-                    PRODUCT.PRODUCT_NAME, 
-                    PRODUCT.QUANTITY, 
-                    PRODUCT.PRICE).values(
-                            product, 
-                            quantity, 
-                            price
-                    ).execute();
+                .fetchExists(selectFrom(PRODUCT)
+                        .where(PRODUCT.PRODUCT_NAME.eq(product)));
+
+        if (!isProductExist) {
+            // Insert the product into the database
+            DB.context().insertInto(PRODUCT, PRODUCT.PRODUCT_NAME, PRODUCT.QUANTITY, PRODUCT.PRICE)
+                    .values(product, quantity, price)
+                    .execute();
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Price already exists. Did you mean to update instead?",
-                    "Warning",
-                    JOptionPane.ERROR_MESSAGE);
+            // Display error message
+            JOptionPane.showMessageDialog(this, "Product already exists. Did you mean to update instead?", "Warning", JOptionPane.ERROR_MESSAGE);
         }
-        
+      
 
         populateProductTable();
         
@@ -800,7 +845,6 @@ public class Dashboard extends javax.swing.JFrame {
         addressField.setText(customerTableModel.getValueAt(getSelectedRowIndex, 2).toString());
         phoneNumberField.setText(customerTableModel.getValueAt(getSelectedRowIndex, 3).toString());
         
-        
     }//GEN-LAST:event_customerTableMouseClicked
 
     /**
@@ -830,6 +874,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel ProductsPanel;
     private javax.swing.JButton addCustomerBtn;
     private javax.swing.JButton addItemBtn;
+    private javax.swing.JSpinner addItemQuantitySpinner;
     private javax.swing.JButton addOrderBtn;
     private javax.swing.JButton addProductBtn;
     private javax.swing.JTextField addressField;
@@ -870,11 +915,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lol;
     private javax.swing.JTextField phoneNumberField;
+    private javax.swing.JTextField priceField;
     private javax.swing.JSpinner priceSpinner;
     private javax.swing.JComboBox<String> productDropdown;
     private javax.swing.JTextField productField;
@@ -919,12 +965,8 @@ public class Dashboard extends javax.swing.JFrame {
             rowData[1] = r.get(PRODUCT.PRODUCT_NAME);
             rowData[2] = r.get(PRODUCT.QUANTITY);
             rowData[3] = r.get(PRODUCT.PRICE);
-            customerTableModel.addRow(rowData);
+            productTableModel.addRow(rowData);
         }
-    }
-
-    private void populateProductDropdown() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
