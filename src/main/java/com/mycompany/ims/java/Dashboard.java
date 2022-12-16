@@ -2,10 +2,11 @@ package com.mycompany.ims.java;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import static ims.gen.Tables.CUSTOMER;
+import static ims.gen.Tables.ORDER;
 import java.awt.CardLayout;
 import javax.swing.UIManager;
 import static ims.gen.Tables.PRODUCT;
-import static ims.gen.Tables.TRANSACTION;
+import static ims.gen.Tables.ORDER_ITEMS;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -677,38 +678,41 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderBtnActionPerformed
-        String getCustomerFromDropdown = customerDropdown.getSelectedItem().toString();
+        int getCustomerIdFromDropdown = (int)DB.context().select(CUSTOMER.CUSTOMER_ID).from(CUSTOMER).where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString())).fetchOne().get(CUSTOMER.CUSTOMER_ID);
         String getTrackingNumberFromField = trackingNumberField.getText();
         int getAmountTenderedFromSpinner = (int) amountTendered.getValue();
-        Record1<Integer> getProductIdFromProductName = 
-                DB.context()
-                        .select(PRODUCT.PRODUCT_ID)
-                        .from(PRODUCT)
-                        .where(PRODUCT.PRODUCT_NAME.eq(productDropdown.getSelectedItem().toString()))
-                        .fetchOne();
-        Record1<Integer> getCustomerIdFromCustomerName =
-                DB.context()
-                        .select(CUSTOMER.ID)
-                        .from(CUSTOMER)
-                        .where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString()))
-                        .fetchOne();
         
+        DB.context().insertInto(ORDER).values(getCustomerIdFromDropdown, getTrackingNumberFromField, getAmountTenderedFromSpinner).execute();
         
         DefaultTableModel itemTableModel = (DefaultTableModel) itemTable.getModel();
         int rowCount = itemTableModel.getRowCount();
         
+        //Get row data from items table
         for (int row = 0; row < rowCount; row++) {
             List<Object> rowData = new ArrayList<>();
             for (int column = 0; column < itemTableModel.getColumnCount(); column++) {
-                rowData.add(DB.context()
+                //Add Product ID
+                rowData.add((int)DB.context()
                         .select(PRODUCT.PRODUCT_ID)
                         .from(PRODUCT)
-                        .where(PRODUCT.PRODUCT_NAME.eq(itemTableModel.getValueAt(row, column)))
-                        .fetchOne());
+                        .where(PRODUCT.PRODUCT_NAME.eq(itemTableModel.getValueAt(row, 0).toString()))
+                        .fetchOne()
+                        .get(PRODUCT.PRODUCT_ID));
+                
+                //Add Customer ID
+//                rowData.add((int) DB.context()
+//                        .select(CUSTOMER.ID)
+//                        .from(CUSTOMER)
+//                        .where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString()))
+//                        .fetchOne()
+//                        .get(CUSTOMER.ID));
+                
                 rowData.add(itemTableModel.getValueAt(row, column));
             }
-            DB.context().insertInto(TRANSACTION).values(rowData).execute();
+            DB.context().insertInto(ORDER_ITEMS).values(rowData).execute();
         }
+        
+//        DB.context().insertInto
         
         
         
@@ -807,7 +811,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .set(CUSTOMER.NAME, customerName)
                 .set(CUSTOMER.ADDRESS, address)
                 .set(CUSTOMER.PHONE_NUMBER, phoneNumber)
-                .where(CUSTOMER.ID.eq(getCustomerId))
+                .where(CUSTOMER.CUSTOMER_ID.eq(getCustomerId))
                 .execute();
         
         populateCustomerTable();
@@ -822,7 +826,7 @@ public class Dashboard extends javax.swing.JFrame {
             int getCustomerId = (Integer) customerTable.getValueAt(customerTable.getSelectedRow(), 0);
             
             try {
-                DB.context().delete(CUSTOMER).where(CUSTOMER.ID.eq(getCustomerId)).execute();
+                DB.context().delete(CUSTOMER).where(CUSTOMER.CUSTOMER_ID.eq(getCustomerId)).execute();
             } catch (DataAccessException e) {
                 JOptionPane.showMessageDialog(this,
                         "Unable to delete customer.",
@@ -938,12 +942,12 @@ public class Dashboard extends javax.swing.JFrame {
     private void populateCustomerTable() {
         customerTableModel.setRowCount(0);
         
-        var res = DB.context().select(CUSTOMER.ID, CUSTOMER.NAME, CUSTOMER.ADDRESS, CUSTOMER.PHONE_NUMBER).from(CUSTOMER).fetch();
+        var res = DB.context().select(CUSTOMER.CUSTOMER_ID, CUSTOMER.NAME, CUSTOMER.ADDRESS, CUSTOMER.PHONE_NUMBER).from(CUSTOMER).fetch();
         
         var rowData = new Object[4];
         
         for (Record r : res) {
-            rowData[0] = r.get(CUSTOMER.ID);
+            rowData[0] = r.get(CUSTOMER.CUSTOMER_ID);
             rowData[1] = r.get(CUSTOMER.NAME);
             rowData[2] = r.get(CUSTOMER.ADDRESS);
             rowData[3] = r.get(CUSTOMER.PHONE_NUMBER);
