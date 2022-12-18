@@ -10,11 +10,11 @@ import static ims.gen.Tables.ORDER_ITEMS;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.Record;
-import org.jooq.Record2;
 import org.jooq.exception.DataAccessException;
 import static org.jooq.impl.DSL.selectFrom;
 
@@ -32,12 +32,7 @@ public class Dashboard extends javax.swing.JFrame {
         cl = (CardLayout) (cardPanels.getLayout());
         jSplitPane1.setEnabled(false);
         jLabel7.setText("Dashboard");
-        
-        // Make row non-editable
-        customerTable.setDefaultEditor(Object.class, null);
-        productTable.setDefaultEditor(Object.class, null);
-        itemTable.setDefaultEditor(Object.class, null);
-        
+
         itemTableModel = (DefaultTableModel) itemTable.getModel();
         
         customerTableModel = (DefaultTableModel) customerTable.getModel();
@@ -107,10 +102,9 @@ public class Dashboard extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         deleteItemBtn = new javax.swing.JButton();
-        lol = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        orderTable = new javax.swing.JTable();
         ProductsPanel = new javax.swing.JPanel();
         addProductBtn = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -238,6 +232,11 @@ public class Dashboard extends javax.swing.JFrame {
                 "Product", "Total Price", "Quantity"
             }
         ));
+        itemTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itemTableMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(itemTable);
 
         changeText.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -262,8 +261,6 @@ public class Dashboard extends javax.swing.JFrame {
                 deleteItemBtnActionPerformed(evt);
             }
         });
-
-        lol.setText("egffer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -316,10 +313,6 @@ public class Dashboard extends javax.swing.JFrame {
                                 .addComponent(jButton6)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lol)
-                .addGap(99, 99, 99))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,14 +359,12 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(addOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(lol)
-                .addGap(25, 25, 25))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jSplitPane2.setLeftComponent(jPanel2);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -383,8 +374,21 @@ public class Dashboard extends javax.swing.JFrame {
             new String [] {
                 "Customer", "Order Number", "Date Ordered"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                orderTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(orderTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -441,9 +445,22 @@ public class Dashboard extends javax.swing.JFrame {
             new String [] {
                 "ID", "Product", "Quantity", "Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         productTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         productTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        productTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(productTable);
 
         jLabel1.setText("Product Name");
@@ -540,7 +557,15 @@ public class Dashboard extends javax.swing.JFrame {
             new String [] {
                 "ID", "Name", "Address", "Phone Number"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         customerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         customerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -655,6 +680,7 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addressFieldActionPerformed
 
+    // Order
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         String product = (String) productDropdown.getSelectedItem().toString();
         int quantity = (Integer) addItemQuantitySpinner.getValue();
@@ -665,9 +691,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .where(PRODUCT.PRODUCT_NAME.eq(product))
                 .fetchOne();
         
-        int totalPrice = getProductDetails.get(PRODUCT.PRICE);
-        
-        lol.setText(String.valueOf(totalPrice));
+        int totalPrice = getProductDetails.get(PRODUCT.PRICE) * quantity;
 
         var rowData = new Object[3];
         rowData[0] = product;
@@ -676,13 +700,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         itemTableModel.addRow(rowData);
     }//GEN-LAST:event_addItemBtnActionPerformed
-
+    // Order
     private void addOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderBtnActionPerformed
-        int getCustomerIdFromDropdown = (int)DB.context().select(CUSTOMER.CUSTOMER_ID).from(CUSTOMER).where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString())).fetchOne().get(CUSTOMER.CUSTOMER_ID);
+        int getCustomerIdFromDropdown = (int) DB.context().select(CUSTOMER.CUSTOMER_ID).from(CUSTOMER).where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString())).fetchOne().get(CUSTOMER.CUSTOMER_ID);
         String getTrackingNumberFromField = trackingNumberField.getText();
         int getAmountTenderedFromSpinner = (int) amountTendered.getValue();
         
+        // Insert data to Order table
         DB.context().insertInto(ORDER).values(getCustomerIdFromDropdown, getTrackingNumberFromField, getAmountTenderedFromSpinner).execute();
+        
         
         DefaultTableModel itemTableModel = (DefaultTableModel) itemTable.getModel();
         int rowCount = itemTableModel.getRowCount();
@@ -691,7 +717,15 @@ public class Dashboard extends javax.swing.JFrame {
         for (int row = 0; row < rowCount; row++) {
             List<Object> rowData = new ArrayList<>();
             for (int column = 0; column < itemTableModel.getColumnCount(); column++) {
-                //Add Product ID
+                //Get Order ID
+                rowData.add((int) DB.context()
+                        .select(ORDER.ORDER_ID)
+                        .from(ORDER)
+                        .orderBy(ORDER.ORDER_ID.desc())
+                        .fetchOne()
+                        .get(ORDER.ORDER_ID));
+
+                //Get Product ID
                 rowData.add((int)DB.context()
                         .select(PRODUCT.PRODUCT_ID)
                         .from(PRODUCT)
@@ -699,25 +733,15 @@ public class Dashboard extends javax.swing.JFrame {
                         .fetchOne()
                         .get(PRODUCT.PRODUCT_ID));
                 
-                //Add Customer ID
-//                rowData.add((int) DB.context()
-//                        .select(CUSTOMER.ID)
-//                        .from(CUSTOMER)
-//                        .where(CUSTOMER.NAME.eq(customerDropdown.getSelectedItem().toString()))
-//                        .fetchOne()
-//                        .get(CUSTOMER.ID));
-                
+                //Get Total Price and Quantity
                 rowData.add(itemTableModel.getValueAt(row, column));
             }
             DB.context().insertInto(ORDER_ITEMS).values(rowData).execute();
         }
         
-//        DB.context().insertInto
-        
-        
-        
+        populateOrderTable();
     }//GEN-LAST:event_addOrderBtnActionPerformed
-
+    // Order
     private void addCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerBtnActionPerformed
         String customerName = customerNameField.getText();
         String address = addressField.getText();
@@ -750,11 +774,9 @@ public class Dashboard extends javax.swing.JFrame {
                     "Warning",
                     JOptionPane.ERROR_MESSAGE);
         }
-        
-
         populateCustomerTable();
     }//GEN-LAST:event_addCustomerBtnActionPerformed
-
+    // Product
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
         String product = productField.getText().trim();
         int quantity = (Integer) quantitySpinner.getValue();
@@ -787,11 +809,11 @@ public class Dashboard extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_addProductBtnActionPerformed
-
+    // Product
     private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteItemBtnActionPerformed
-
+    // Customer
     private void updateCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCustomerBtnActionPerformed
         String customerName = customerNameField.getText().trim();
         String address = addressField.getText();
@@ -820,7 +842,7 @@ public class Dashboard extends javax.swing.JFrame {
         addressField.setText("");
         phoneNumberField.setText("");
     }//GEN-LAST:event_updateCustomerBtnActionPerformed
-
+    // Customer
     private void deleteCustomerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerBtnActionPerformed
         if (customerTable.getSelectedRow() > -1) {
             int getCustomerId = (Integer) customerTable.getValueAt(customerTable.getSelectedRow(), 0);
@@ -841,7 +863,7 @@ public class Dashboard extends javax.swing.JFrame {
             populateCustomerTable();
         }
     }//GEN-LAST:event_deleteCustomerBtnActionPerformed
-
+    // Customer
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
         int getSelectedRowIndex = customerTable.getSelectedRow();
         
@@ -851,6 +873,56 @@ public class Dashboard extends javax.swing.JFrame {
         
     }//GEN-LAST:event_customerTableMouseClicked
 
+    private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_orderTableMouseClicked
+
+    private void itemTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemTableMouseClicked
+
+    private void productTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productTableMouseClicked
+
+    // Customer
+    private void populateCustomerTable() {
+        customerTableModel.setRowCount(0);
+
+        var res = DB.context().select(CUSTOMER.CUSTOMER_ID, CUSTOMER.NAME, CUSTOMER.ADDRESS, CUSTOMER.PHONE_NUMBER).from(CUSTOMER).fetch();
+
+        var rowData = new Object[4];
+
+        for (Record r : res) {
+            rowData[0] = r.get(CUSTOMER.CUSTOMER_ID);
+            rowData[1] = r.get(CUSTOMER.NAME);
+            rowData[2] = r.get(CUSTOMER.ADDRESS);
+            rowData[3] = r.get(CUSTOMER.PHONE_NUMBER);
+            customerTableModel.addRow(rowData);
+        }
+
+    }
+    // Product
+    private void populateProductTable() {
+        productTableModel.setRowCount(0);
+
+        var res = DB.context().select(PRODUCT.PRODUCT_ID, PRODUCT.PRODUCT_NAME, PRODUCT.QUANTITY, PRODUCT.PRICE).from(PRODUCT).fetch();
+
+        var rowData = new Object[4];
+
+        for (Record r : res) {
+            rowData[0] = r.get(PRODUCT.PRODUCT_ID);
+            rowData[1] = r.get(PRODUCT.PRODUCT_NAME);
+            rowData[2] = r.get(PRODUCT.QUANTITY);
+            rowData[3] = r.get(PRODUCT.PRICE);
+            productTableModel.addRow(rowData);
+        }
+    }
+    // Order
+    private void populateOrderTable() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -921,8 +993,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lol;
+    private javax.swing.JTable orderTable;
     private javax.swing.JTextField phoneNumberField;
     private javax.swing.JTextField priceField;
     private javax.swing.JSpinner priceSpinner;
@@ -934,44 +1005,4 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField trackingNumberField;
     private javax.swing.JButton updateCustomerBtn;
     // End of variables declaration//GEN-END:variables
-
-    private void populateTable() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void populateCustomerTable() {
-        customerTableModel.setRowCount(0);
-        
-        var res = DB.context().select(CUSTOMER.CUSTOMER_ID, CUSTOMER.NAME, CUSTOMER.ADDRESS, CUSTOMER.PHONE_NUMBER).from(CUSTOMER).fetch();
-        
-        var rowData = new Object[4];
-        
-        for (Record r : res) {
-            rowData[0] = r.get(CUSTOMER.CUSTOMER_ID);
-            rowData[1] = r.get(CUSTOMER.NAME);
-            rowData[2] = r.get(CUSTOMER.ADDRESS);
-            rowData[3] = r.get(CUSTOMER.PHONE_NUMBER);
-            customerTableModel.addRow(rowData);
-        }
-        
-        
-    }
-
-    private void populateProductTable() {
-        productTableModel.setRowCount(0);
-
-        var res = DB.context().select(PRODUCT.PRODUCT_ID, PRODUCT.PRODUCT_NAME, PRODUCT.QUANTITY, PRODUCT.PRICE).from(PRODUCT).fetch();
-
-        var rowData = new Object[4];
-
-        for (Record r : res) {
-            rowData[0] = r.get(PRODUCT.PRODUCT_ID);
-            rowData[1] = r.get(PRODUCT.PRODUCT_NAME);
-            rowData[2] = r.get(PRODUCT.QUANTITY);
-            rowData[3] = r.get(PRODUCT.PRICE);
-            productTableModel.addRow(rowData);
-        }
-    }
-
-
 }
