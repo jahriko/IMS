@@ -1,4 +1,4 @@
-# How to make changes to the codebase
+# How to make changes to the codebase (This is for my group mates)
 
 <p align="center"><strong>Cloning the repository</strong></p>
 
